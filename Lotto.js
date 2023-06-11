@@ -10,4 +10,4 @@ function generateLottoNumbers() {
 }
 
 var result = generateLottoNumbers();
-console.log("로또 번호: " + result.join(", "));
+console.log("로또 번호: " + result.join(", "));  //주석 및 코멘트를 입력해주세요
