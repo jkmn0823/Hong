@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CRUD 웹사이트</title>
+  <link rel="stylesheet" href="웹페이지.css">
+</head>
+<body>
+  <h1>CRUD 웹사이트</h1>
+  <h2>19조 - 개인제출</h2>
+  <h2>20201804 정민우</h2>
+  <input type="text" id="inputText" placeholder="데이터 입력">
+  <button onclick="insertData()">추가</button>
+  <br><br>
+  <input type="text" id="searchText" placeholder="데이터 검색">
+  <button onclick="searchData()">검색</button>
+  <br><br>
+  <h3>목록</h3>
+  <ul id="dataList"></ul>
+  <script>
+    var data = [];
+
+    function insertData() {
+      var inputElement = document.getElementById('inputText');
+      var newData = inputElement.value;
+
+      if (newData) {
+        data.push(newData);
+        inputElement.value = '';
+        displayData();
+      }
+    }
+
+    function searchData() {
+      var searchElement = document.getElementById('searchText');
+      var searchText = searchElement.value;
+      var searchResults = [];
+
+      if (searchText) {
+        searchResults = data.filter(function(item) {
+          return item.includes(searchText);
+        });
+      } else {
+        searchResults = data;
+      }
+
+      displaySearchResults(searchResults);
+    }
+
+    function deleteData(index) {
+      if (confirm('정말로 삭제하시겠습니까?')) {
+        data.splice(index, 1);
+        displayData();
+      }
+    }
+
+    function displayData() {
+      var dataListElement = document.getElementById('dataList');
+      dataListElement.innerHTML = '';
+
+      data.forEach(function(item, index) {
+        var liElement = document.createElement('li');
+        liElement.innerText = item;
+
+        var updateButton = document.createElement('button');
+        updateButton.innerText = '수정';
+        updateButton.onclick = function() {
+          var newData = prompt('새로운 데이터를 입력하세요.');
+          if (newData) {
+            data[index] = newData;
+            displayData();
+          }
+        };
+
+        var deleteButton = document.createElement('button');
+        deleteButton.innerText = '삭제';
+        deleteButton.onclick = function() {
+          deleteData(index);
+        };
+
+        liElement.appendChild(updateButton);
+        liElement.appendChild(deleteButton);
+        dataListElement.appendChild(liElement);
+      });
+    }
+
+    function displaySearchResults(results) {
+      var dataListElement = document.getElementById('dataList');
+      dataListElement.innerHTML = '';
+
+      results.forEach(function(item) {
+        var liElement = document.createElement('li');
+        liElement.innerText = item;
+        dataListElement.appendChild(liElement);
+      });
+    }
+
+  </script>
+</body>
+</html>
